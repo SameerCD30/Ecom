@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:5173")
 public class ProductController {
 
     @Autowired
@@ -32,7 +32,6 @@ public class ProductController {
             return new ResponseEntity<>(product,HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
     }
 
     @PostMapping("/product")
@@ -46,8 +45,32 @@ public class ProductController {
         }
     }
 
+    @GetMapping("product/{productId}/image")
+    public ResponseEntity<byte[]>  getImageByProductId(@PathVariable int productId){
+        Product product = productService.getProductById(productId);
+        if(product != null){
+            return new ResponseEntity<>(product.getImageData(),HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 
+//    @DeleteMapping("product/{productId}")
+//    public ResponseEntity<Product> deleteProductById(@PathVariable int productId){
+//        Product product = productService.deleteProductById(productId);
+//
+//    }
 
-     
+    @PutMapping("/product/{productId}")
+    public ResponseEntity<String> updateProduct(@PathVariable int productId, @RequestPart Product product, @RequestPart
+                                                MultipartFile imageFile){
+        Product updatedProduct = null;
+        try{
+            updatedProduct = productService.updateProduct(product, imageFile);
+            return new ResponseEntity<>("updated", HttpStatus.OK);
+        } catch (IOException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.OK);
+        }
+    }
+
 
 }
