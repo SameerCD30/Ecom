@@ -2,6 +2,7 @@ package com.sameer.Ecom.service;
 
 import com.sameer.Ecom.model.Product;
 import com.sameer.Ecom.repo.ProductRepo;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
@@ -40,5 +41,13 @@ public class ProductService {
         product.setImageType(imageFile.getContentType());
         product.setImageData(imageFile.getBytes());
         return productRepo.save(product);
+    }
+
+    public void deleteById(int productId) {
+        productRepo.deleteById(productId);
+    }
+
+    public List<Product> searchProducts(String keyword) {
+        return productRepo.searchProducts(keyword);
     }
 }

@@ -38,4 +38,5 @@ public class Product {
 
     @Lob
     private byte[] imageData;
+
 }

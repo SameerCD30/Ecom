@@ -54,11 +54,16 @@ public class ProductController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-//    @DeleteMapping("product/{productId}")
-//    public ResponseEntity<Product> deleteProductById(@PathVariable int productId){
-//        Product product = productService.deleteProductById(productId);
-//
-//    }
+    @DeleteMapping("product/{productId}")
+    public ResponseEntity<String> deleteProductById(@PathVariable int productId){
+        Product product = productService.getProductById(productId);
+        if(product != null){
+            productService.deleteById(productId);
+            return new ResponseEntity<>("Deleted", HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 
     @PutMapping("/product/{productId}")
     public ResponseEntity<String> updateProduct(@PathVariable int productId, @RequestPart Product product, @RequestPart
@@ -72,5 +77,14 @@ public class ProductController {
         }
     }
 
-
+    @GetMapping("/products/search")
+    public ResponseEntity<List<Product>> searchProduct(@RequestParam String keyword){
+        List<Product> products = productService.searchProducts(keyword);
+        System.out.println("searching with " + keyword);
+        if(products != null){
+            return new ResponseEntity<>(products, HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 }
