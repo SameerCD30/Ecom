@@ -33,9 +33,10 @@ public class Product {
 
     private Integer stockQuantity;
 
+
+    // Image
     private String imageName;
     private String imageType;
-
     @Lob
     private byte[] imageData;
 
