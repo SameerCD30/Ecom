@@ -29,5 +29,5 @@ public class OrderItem {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
-    private Order order;          // ← resolves to com.sameer.Ecom.model.Order
+    private Order order;
 }

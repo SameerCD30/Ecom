@@ -24,7 +24,7 @@ public class Order {
     private String status;
     private LocalDate orderDate;
 
-    @OneToMany
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderItem> orderItems;
 
 
